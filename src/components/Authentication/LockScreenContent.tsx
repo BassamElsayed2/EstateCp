@@ -21,14 +21,14 @@ const LockScreenContent: React.FC = () => {
 
             <div className="xl:ltr:pl-[90px] xl:rtl:pr-[90px] 2xl:ltr:pl-[120px] 2xl:rtl:pr-[120px] order-1 lg:order-2">
               <Image
-                src="/images/logo-big.svg"
+                src="/images/ENS.png"
                 alt="logo"
                 className="inline-block dark:hidden"
                 width={142}
                 height={38}
               />
               <Image
-                src="/images/white-logo-big.svg"
+                src="/images/ENS.png"
                 alt="logo"
                 className="hidden dark:inline-block"
                 width={142}
@@ -37,7 +37,7 @@ const LockScreenContent: React.FC = () => {
 
               <div className="my-[17px] md:my-[25px]">
                 <h1 className="!font-semibold !text-[22px] md:!text-xl lg:!text-2xl !mb-[5px] md:!mb-[10px]">
-                  Welcome back to Trezo!
+                  Welcome back to ENS!
                 </h1>
                 <p className="font-medium leading-[1.5] lg:text-md text-[#445164] dark:text-gray-400">
                   Enter your password to access the admin.

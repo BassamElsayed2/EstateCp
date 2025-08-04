@@ -51,14 +51,14 @@ const Navbar: React.FC = () => {
               className="inline-block max-w-[130px] ltr:mr-[15px] rtl:ml-[15px]"
             >
               <Image
-                src="/images/logo-big.svg"
+                src="/images/ENS.png"
                 alt="logo"
                 className="inline-block dark:hidden"
                 width={126}
                 height={36}
               />
               <Image
-                src="/images/white-logo-big.svg"
+                src="/images/ENS.png"
                 alt="logo"
                 className="hidden dark:inline-block"
                 width={126}

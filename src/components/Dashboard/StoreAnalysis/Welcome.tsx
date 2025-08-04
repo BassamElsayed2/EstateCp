@@ -17,10 +17,10 @@ const Welcome: React.FC = () => {
             <div className="lg:col-span-2">
               <div className="md:pt-[20px] text-center ltr:md:text-left rtl:md:text-right">
                 <span className="block text-primary-200 font-medium mb-[4px]">
-                  Hello Olivia ✋
+                  Hello Olivia ENS ✋
                 </span>
                 <h1 className="!text-white !text-2xl !mb-0 !font-normal">
-                  Welcome To Trezo –{" "}
+                  Welcome To  –{" "}
                   <strong className="font-black">Your Store</strong>
                 </h1>
               </div>

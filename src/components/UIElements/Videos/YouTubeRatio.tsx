@@ -15,7 +15,7 @@ const YouTubeRatio: React.FC = () => {
           <iframe
             className="w-full aspect-video"
             src="https://www.youtube.com/embed/_ZppXdKk4c8"
-            title="Introducing Trezo | The Next-Generation Multi-Framework Admin Dashboard Template"
+            title="Introducing ENS | The Next-Generation Multi-Framework Admin Dashboard Template"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen

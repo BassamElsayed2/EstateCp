@@ -85,7 +85,7 @@ const ToDoList: React.FC = () => {
     },
     {
       id: "#858",
-      title: "Schedule Meeting with Trezo",
+      title: "Schedule Meeting with ENS",
       assignedTo: "Catalina Engles",
       dueDate: "15 Apr 2024",
       priority: "High",
@@ -141,7 +141,7 @@ const ToDoList: React.FC = () => {
     },
     {
       id: "#864",
-      title: "Schedule Meeting with Trezo",
+      title: "Schedule Meeting with ENS",
       assignedTo: "Catalina Engles",
       dueDate: "15 Apr 2024",
       priority: "High",

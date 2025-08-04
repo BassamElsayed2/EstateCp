@@ -82,7 +82,7 @@ const initialUsers: User[] = [
     name: "Emma Wilson",
     email: "emma@trezo.com",
     role: "QA Tester",
-    projectAccess: "Product Development, Trezo Dashboard",
+    projectAccess: "Product Development, ENS Dashboard",
     status: "Deactive",
     avatar: "/images/users/user14.jpg",
   },

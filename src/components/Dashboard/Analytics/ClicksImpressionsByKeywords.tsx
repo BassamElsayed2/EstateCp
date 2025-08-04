@@ -74,7 +74,7 @@ const ClicksImpressionsByKeywords: React.FC = () => {
         },
         {
           id: 8,
-          dimension: "trezo dashboard",
+          dimension: "ENS dashboard",
           impressions: { value: 660, trend: "up" },
           clicks: { value: 478, trend: "down" },
         },

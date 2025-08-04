@@ -21,14 +21,14 @@ const ConfirmEmailContent: React.FC = () => {
             </div>
             <div className="xl:ltr:pl-[90px] xl:rtl:pr-[90px] 2xl:ltr:pl-[120px] 2xl:rtl:pr-[120px] order-1 lg:order-2">
               <Image
-                src="/images/logo-big.svg"
+                src="/images/ENS.png"
                 alt="logo"
                 className="inline-block dark:hidden"
                 width={142}
                 height={38}
               />
               <Image
-                src="/images/white-logo-big.svg"
+                src="/images/ENS.png"
                 alt="logo"
                 className="hidden dark:inline-block"
                 width={142}

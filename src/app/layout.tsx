@@ -19,8 +19,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Trezo - Tailwind Nextjs Admin Dashboard Templat",
-  description: "Tailwind Nextjs Admin Dashboard Templat",
+  title: "ENS - Enterprise Network Solutions",
+  description: "Enterprise Network Solutions",
 };
 
 export default function RootLayout({

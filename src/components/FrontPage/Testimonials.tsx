@@ -16,7 +16,7 @@ const testimonialsData: Testimonial[] = [
     name: "Sarah Thompson",
     role: "Data Analyst",
     feedback:
-      "Trezo Dashboard Template has transformed how we manage our data. Its intuitive design and customizable features have streamlined our analytics process, enabling us to make informed decisions faster than ever before.",
+      "ENS Dashboard Template has transformed how we manage our data. Its intuitive design and customizable features have streamlined our analytics process, enabling us to make informed decisions faster than ever before.",
     image: "/images/front-pages/user1.jpg",
     rating: 5,
   },
@@ -24,7 +24,7 @@ const testimonialsData: Testimonial[] = [
     name: "John Smith",
     role: "Software Engineer",
     feedback:
-      "As a developer, I appreciate the flexibility and robustness of Trezo Dashboard. It offers a wide range of features that cater to our diverse needs, and its clean codebase has made customization a breeze. Highly recommended!",
+      "As a developer, I appreciate the flexibility and robustness of ENS Dashboard. It offers a wide range of features that cater to our diverse needs, and its clean codebase has made customization a breeze. Highly recommended!",
     image: "/images/front-pages/user2.jpg",
     rating: 4.5,
   },
@@ -32,7 +32,7 @@ const testimonialsData: Testimonial[] = [
     name: "Alex Rodriguez",
     role: "Marketing Director",
     feedback:
-      "Trezo Dashboard has been a lifesaver for our organization. It's helped us streamline our reporting processes and communicate insights effectively across departments. The time saved has allowed us to focus more on strategic initiatives.",
+      "ENS Dashboard has been a lifesaver for our organization. It's helped us streamline our reporting processes and communicate insights effectively across departments. The time saved has allowed us to focus more on strategic initiatives.",
     image: "/images/front-pages/user3.jpg",
     rating: 4,
   },
@@ -40,7 +40,7 @@ const testimonialsData: Testimonial[] = [
     name: "Kevin Brown",
     role: "Project Manager",
     feedback:
-      "I can't recommend the Trezo Template enough. It's helped us gain a deeper understanding of our business metrics and identify areas for improvement. The responsive support team is a bonus, always ready to assist whenever needed.",
+      "I can't recommend the ENS Template enough. It's helped us gain a deeper understanding of our business metrics and identify areas for improvement. The responsive support team is a bonus, always ready to assist whenever needed.",
     image: "/images/front-pages/user4.jpg",
     rating: 3.5,
   },
@@ -48,7 +48,7 @@ const testimonialsData: Testimonial[] = [
     name: "Olivia Adams",
     role: "Marketing Coordinator",
     feedback:
-      "Using Trezo Dashboard Template has been a game-changer for our team. The ability to customize widgets to suit our specific needs has allowed us to gain deeper insights into our performance metrics and drive business growth.",
+      "Using ENS Dashboard Template has been a game-changer for our team. The ability to customize widgets to suit our specific needs has allowed us to gain deeper insights into our performance metrics and drive business growth.",
     image: "/images/front-pages/user5.jpg",
     rating: 5,
   },
@@ -56,7 +56,7 @@ const testimonialsData: Testimonial[] = [
     name: "Daniel Lee",
     role: "Co-founder, StartupX",
     feedback:
-      "As a startup, we needed a dashboard solution that was both powerful and cost-effective. Trezo Dashboard Template checked all the boxes for us. It's helped us stay agile and competitive in a fast-paced market.",
+      "As a startup, we needed a dashboard solution that was both powerful and cost-effective. ENS Dashboard Template checked all the boxes for us. It's helped us stay agile and competitive in a fast-paced market.",
     image: "/images/front-pages/user3.jpg",
     rating: 3,
   },
@@ -78,7 +78,7 @@ const Testimonials: React.FC = () => {
               </span>
             </div>
             <h2 className="!mb-0 !text-[24px] md:!text-[28px] lg:!text-[34px] xl:!text-[36px] -tracking-[.5px] md:-tracking-[.6px] lg:-tracking-[.8px] xl:-tracking-[1px] !leading-[1.2]">
-              Inspiring Feedback: What Users Love About Trezo Dashboard
+              Inspiring Feedback: What Users Love About ENS Dashboard
             </h2>
           </div>
 

@@ -25,7 +25,7 @@ const Reviews: React.FC = () => {
       rating: 5.0,
       title: "Amazing Ambiance and Delicious Food!",
       review:
-        "Trezo was a fantastic dining experience. The ambiance is warm and inviting, perfect for a date night or celebration. I ordered the truffle pasta, which was rich and perfectly seasoned. The service was impeccable, and the staff made us feel like family. Highly recommend!",
+        "ENS was a fantastic dining experience. The ambiance is warm and inviting, perfect for a date night or celebration. I ordered the truffle pasta, which was rich and perfectly seasoned. The service was impeccable, and the staff made us feel like family. Highly recommend!",
       date: "13 Nov, 25",
     },
     {
@@ -36,7 +36,7 @@ const Reviews: React.FC = () => {
       rating: 4.9,
       title: "Best Brunch Spot in Town",
       review:
-        "Visited Trezo for brunch with friends, and it exceeded our expectations. The avocado toast was fresh, and their mimosas were spot-on. Our server was attentive without being intrusive. Definitely coming back!",
+        "Visited ENS for brunch with friends, and it exceeded our expectations. The avocado toast was fresh, and their mimosas were spot-on. Our server was attentive without being intrusive. Definitely coming back!",
       date: "14 Nov, 25",
     },
     {
@@ -58,7 +58,7 @@ const Reviews: React.FC = () => {
       rating: 5.0,
       title: "Perfect Anniversary Dinner",
       review:
-        "Trezo made our anniversary special. They gave us a complimentary dessert with a candle. The wine pairing suggestion was excellent. Every dish was beautifully presented.",
+        "ENS made our anniversary special. They gave us a complimentary dessert with a candle. The wine pairing suggestion was excellent. Every dish was beautifully presented.",
       date: "16 Nov, 25",
     },
     {

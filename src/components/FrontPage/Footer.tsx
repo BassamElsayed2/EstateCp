@@ -16,14 +16,14 @@ const Footer: React.FC = () => {
                 className="inline-block max-w-[132px] mb-[20px] md:mb-[23px]"
               >
                 <Image
-                  src="/images/logo-big.svg"
+                  src="/images/ENS.png"
                   alt="logo"
                   className="inline-block dark:hidden"
                   width={132}
                   height={53}
                 />
                 <Image
-                  src="/images/white-logo-big.svg"
+                  src="/images/ENS.png"
                   alt="logo"
                   className="hidden dark:inline-block"
                   width={132}
@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
                     href="/"
                     className="lg:text-[16px] inline-block text-gray-500 dark:text-gray-400 transition-all hover:text-primary-600"
                   >
-                    Trezo Dashboard
+                    ENS Dashboard
                   </Link>
                 </li>
                 <li className="mb-[10px] last:mb-0">
@@ -194,7 +194,7 @@ const Footer: React.FC = () => {
         <div className="py-[15px] md:py-[20px] mt-[60px] md:mt-[80px] lg:mt-[100px] bg-white dark:bg-[#0c1427] text-center">
           <div className="container 2xl:max-w-[1320px] mx-auto px-[12px]">
             <p className="leading-[1.6]">
-              © <span className="text-purple-500">Trezo</span> is Proudly Owned
+              © <span className="text-purple-500">ENS</span> is Proudly Owned
               by{" "}
               <a
                 href="https://envytheme.com/"

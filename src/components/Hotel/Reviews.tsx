@@ -25,7 +25,7 @@ const Reviews: React.FC = () => {
       rating: 5.0,
       title: "Amazing Ambiance and Delicious Food!",
       content:
-        "Trezo was a fantastic dining experience. The ambiance is warm and inviting, perfect for a date night or celebration. I ordered the truffle pasta, which was rich and perfectly seasoned. The service was impeccable, and the staff made us feel like family. Highly recommend!",
+        "ENS was a fantastic dining experience. The ambiance is warm and inviting, perfect for a date night or celebration. I ordered the truffle pasta, which was rich and perfectly seasoned. The service was impeccable, and the staff made us feel like family. Highly recommend!",
       date: "13 Nov, 25",
     },
     {
@@ -36,7 +36,7 @@ const Reviews: React.FC = () => {
       rating: 4.9,
       title: "Best Brunch Spot in Town",
       content:
-        "Visited Trezo for brunch with friends, and it exceeded our expectations. The avocado toast was fresh, and their mimosas were spot-on. Our server was attentive without being intrusive. Definitely coming back!",
+        "Visited ENS for brunch with friends, and it exceeded our expectations. The avocado toast was fresh, and their mimosas were spot-on. Our server was attentive without being intrusive. Definitely coming back!",
       date: "14 Nov, 25",
     },
     {
@@ -47,7 +47,7 @@ const Reviews: React.FC = () => {
       rating: 4.0,
       title: "Good Food, Slow Service",
       content:
-        "The food at Trezo was delicious, but the service was a bit slow. We had to wait a while for our appetizers, and our main course was delayed. It's a nice spot, but they could work on speeding up their service.",
+        "The food at ENS was delicious, but the service was a bit slow. We had to wait a while for our appetizers, and our main course was delayed. It's a nice spot, but they could work on speeding up their service.",
       date: "15 Nov, 25",
     },
     {
@@ -58,7 +58,7 @@ const Reviews: React.FC = () => {
       rating: 4.5,
       title: "Great Cocktails and Atmosphere",
       content:
-        "The bar area at Trezo is fantastic. Their mixologist created a custom cocktail for me that was absolutely perfect. The lighting and music create a great vibe for evening drinks.",
+        "The bar area at ENS is fantastic. Their mixologist created a custom cocktail for me that was absolutely perfect. The lighting and music create a great vibe for evening drinks.",
       date: "16 Nov, 25",
     },
     {
@@ -80,7 +80,7 @@ const Reviews: React.FC = () => {
       rating: 5.0,
       title: "Perfect Anniversary Dinner",
       content:
-        "Trezo made our anniversary special. They decorated our table with rose petals and gave us a complimentary dessert. The steak was cooked to perfection and the wine pairing was excellent.",
+        "ENS made our anniversary special. They decorated our table with rose petals and gave us a complimentary dessert. The steak was cooked to perfection and the wine pairing was excellent.",
       date: "18 Nov, 25",
     },
   ];
@@ -128,13 +128,13 @@ const Reviews: React.FC = () => {
 
   return (
     <>
-      <div className="trezo-card bg-white dark:bg-[#0c1427] p-[20px] md:p-[25px] rounded-md mb-[25px]">
-        <div className="trezo-card-header mb-[20px] md:mb-[25px] flex items-center justify-between">
-          <div className="trezo-card-title">
+      <div className="ENS-card bg-white dark:bg-[#0c1427] p-[20px] md:p-[25px] rounded-md mb-[25px]">
+        <div className="ENS-card-header mb-[20px] md:mb-[25px] flex items-center justify-between">
+          <div className="ENS-card-title">
             <h5 className="!mb-0">Reviews</h5>
           </div>
         </div>
-        <div className="trezo-card-content">
+        <div className="ENS-card-content">
           <div className="table-responsive overflow-x-auto">
             <table className="w-full">
               <thead className="text-black dark:text-white">

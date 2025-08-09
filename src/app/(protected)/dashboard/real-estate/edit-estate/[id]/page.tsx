@@ -29,6 +29,8 @@ import {
   uploadPropertyImages,
   checkSpecialPropertyExists,
 } from "../../../../../../../services/apiProperty";
+import { useRealtors } from "@/components/RealEstate/hooks/useRealtor";
+import { Realtor } from "../../../../../../../services/apiRealtor";
 
 interface PropertyFormData {
   nameAr: string;
@@ -45,6 +47,7 @@ interface PropertyFormData {
   detailsEn: string;
   mapUrl: string;
   isSpecial: boolean;
+  realtor_id?: string;
 }
 
 interface Property {
@@ -64,6 +67,7 @@ interface Property {
   map_url: string;
   images: string[];
   isSpecial: boolean;
+  realtor_id?: string;
   created_at: string;
 }
 
@@ -81,6 +85,8 @@ const EditPropertyForm: React.FC = () => {
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [existingImages, setExistingImages] = useState<string[]>([]);
 
+  const { data: realtors, isLoading: isRealtorsLoading } = useRealtors();
+
   const {
     register,
     handleSubmit,
@@ -91,6 +97,7 @@ const EditPropertyForm: React.FC = () => {
       operation: "للايجار",
       type: "apartment",
       isSpecial: false,
+      realtor_id: "",
     },
   });
 
@@ -114,6 +121,7 @@ const EditPropertyForm: React.FC = () => {
         setValue("addressEn", propertyData.address_en);
         setValue("mapUrl", propertyData.map_url || "");
         setValue("isSpecial", propertyData.isSpecial);
+        setValue("realtor_id", propertyData.realtor_id || "");
 
         // Set editor values
         setDetailsAr(propertyData.details_ar || "");
@@ -439,6 +447,29 @@ const EditPropertyForm: React.FC = () => {
                 {errors.addressEn && (
                   <span className="text-red-500 text-sm mt-1">
                     {errors.addressEn.message}
+                  </span>
+                )}
+              </div>
+
+              <div className="mb-[20px] sm:mb-0">
+                <label className="mb-[10px] text-black dark:text-white font-medium block">
+                  اختر الوكيل العقاري
+                </label>
+                <select
+                  {...register("realtor_id", { required: "هذا الحقل مطلوب" })}
+                  className="h-[55px] rounded-md border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[13px] block w-full outline-0 cursor-pointer transition-all focus:border-primary-500"
+                  disabled={isRealtorsLoading}
+                >
+                  <option value="">اختر وكيل</option>
+                  {realtors?.map((realtor: Realtor) => (
+                    <option key={realtor.id} value={realtor.id}>
+                      {realtor.name}
+                    </option>
+                  ))}
+                </select>
+                {errors.realtor_id && (
+                  <span className="text-red-500 text-sm mt-1">
+                    {errors.realtor_id.message}
                   </span>
                 )}
               </div>

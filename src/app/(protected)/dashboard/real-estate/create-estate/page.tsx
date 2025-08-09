@@ -28,6 +28,8 @@ import {
   uploadPropertyImages,
   checkSpecialPropertyExists,
 } from "../../../../../../services/apiProperty";
+import { useRealtors } from "@/components/RealEstate/hooks/useRealtor";
+import { Realtor } from "../../../../../../services/apiRealtor";
 
 interface PropertyFormData {
   nameAr: string;
@@ -44,6 +46,7 @@ interface PropertyFormData {
   detailsEn: string;
   mapUrl: string;
   isSpecial: boolean;
+  realtor_id: string; // أضفنا هذا السطر
 }
 
 const AddPropertyForm: React.FC = () => {
@@ -53,6 +56,8 @@ const AddPropertyForm: React.FC = () => {
   const [detailsAr, setDetailsAr] = useState<string>("");
   const [detailsEn, setDetailsEn] = useState<string>("");
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
+
+  const { data: realtors, isLoading: isRealtorsLoading } = useRealtors();
 
   const {
     register,
@@ -375,6 +380,29 @@ const AddPropertyForm: React.FC = () => {
                   العقار الخاص سيظهر في مكان مميز في الموقع. يمكن أن يكون هناك
                   عقار خاص واحد فقط في نفس الوقت.
                 </p>
+              </div>
+
+              <div className="mb-[20px] sm:mb-0">
+                <label className="mb-[10px] text-black dark:text-white font-medium block">
+                  اختر الوكيل العقاري
+                </label>
+                <select
+                  {...register("realtor_id", { required: "هذا الحقل مطلوب" })}
+                  className="h-[55px] rounded-md border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[13px] block w-full outline-0 cursor-pointer transition-all focus:border-primary-500"
+                  disabled={isRealtorsLoading}
+                >
+                  <option value="">اختر وكيل</option>
+                  {realtors?.map((realtor: Realtor) => (
+                    <option key={realtor.id} value={realtor.id}>
+                      {realtor.name}
+                    </option>
+                  ))}
+                </select>
+                {errors.realtor_id && (
+                  <span className="text-red-500 text-sm mt-1">
+                    {errors.realtor_id.message}
+                  </span>
+                )}
               </div>
 
               <div className="sm:col-span-2 mb-[20px] sm:mb-0">

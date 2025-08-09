@@ -4,29 +4,13 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteNews, getNews } from "../../../../../services/apiNews";
-import { getCategories } from "../../../../../services/apiCategories";
+import {
+  deleteTestemonial,
+  getTestemonial,
+} from "../../../../../services/apiTestemonial";
 import toast from "react-hot-toast";
 
-const statusColors: Record<string, string> = {
-  normal: "bg-primary-50 dark:bg-[#15203c] text-primary-500",
-  important: "bg-success-50 dark:bg-[#15203c] text-success-500",
-  urgent: "bg-danger-50 dark:bg-[#15203c] text-danger-500",
-  trend: "bg-pink-50 dark:bg-[#15203c] text-danger-500",
-};
-
-const statusLabels: Record<string, string> = {
-  normal: "عادي",
-  important: "مهم",
-  urgent: "عاجل",
-  trend: "رائج",
-};
-
-const NewsListTable: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [selectedStatus, setSelectedStatus] = useState<string | undefined>(
-    undefined
-  );
+const TestimonialListTable: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>("");
   const [dateFilter, setDateFilter] = useState<string>("");
@@ -45,59 +29,30 @@ const NewsListTable: React.FC = () => {
   }, [searchQuery]);
 
   const { isPending, data } = useQuery({
-    queryKey: [
-      "news",
-      currentPage,
-      selectedCategory,
-      selectedStatus,
-      debouncedSearchQuery,
-      dateFilter,
-    ],
+    queryKey: ["testimonial", currentPage, debouncedSearchQuery, dateFilter],
     queryFn: () =>
-      getNews(currentPage, pageSize, {
-        categoryId: selectedCategory,
-        status: selectedStatus,
+      getTestemonial(currentPage, pageSize, {
         search: debouncedSearchQuery,
         date: dateFilter,
       }),
   });
 
-  const news = data?.news || [];
+  console.log(data);
+
+  const testimonials = data?.testimonials || [];
   const total = data?.total || 0;
   const totalPages = Math.ceil(total / pageSize);
-
-  const [categoriesMap, setCategoriesMap] = useState<{
-    [key: string]: string;
-  }>({});
-
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const categories = await getCategories();
-        // نبني خريطة id => category name
-        const map: Record<number, string> = {};
-        categories.forEach((cat) => {
-          map[cat.id] = cat.name_ar;
-        });
-        setCategoriesMap(map);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    fetchCategories();
-  }, []);
 
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
-    mutationFn: deleteNews,
+    mutationFn: deleteTestemonial,
     onSuccess: () => {
-      toast.success("تم حذف الخبر بنجاح");
-      queryClient.invalidateQueries({ queryKey: ["news"] });
+      toast.success("تم حذف التوصية بنجاح");
+      queryClient.invalidateQueries({ queryKey: ["testimonial"] });
     },
     onError: (err) => {
-      toast.error("حدث خطأ أثناء حذف الخبر");
+      toast.error("حدث خطأ أثناء حذف التوصية");
       console.error(err);
     },
   });
@@ -106,7 +61,7 @@ const NewsListTable: React.FC = () => {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCategory, selectedStatus, searchQuery, dateFilter]);
+  }, [searchQuery, dateFilter]);
 
   if (isPending)
     return (
@@ -118,7 +73,7 @@ const NewsListTable: React.FC = () => {
   return (
     <>
       <div className="mb-[25px] md:flex items-center justify-between">
-        <h5 className="!mb-0"> قائمة الاخبار</h5>
+        <h5 className="!mb-0"> قائمة التوصيات</h5>
 
         <ol className="breadcrumb mt-[12px] md:mt-0 rtl:flex-row-reverse">
           <li className="breadcrumb-item inline-block relative text-sm mx-[11px] ltr:first:ml-0 rtl:first:mr-0 ltr:last:mr-0 rtl:last:ml-0">
@@ -133,7 +88,7 @@ const NewsListTable: React.FC = () => {
             </Link>
           </li>
           <li className="breadcrumb-item inline-block  relative text-sm mx-[11px] ltr:first:ml-0 rtl:first:mr-0 ltr:last:mr-0 rtl:last:ml-0">
-            الاخبار
+            التوصيات
           </li>
         </ol>
       </div>
@@ -141,14 +96,14 @@ const NewsListTable: React.FC = () => {
         <div className="trezo-card-header mb-[20px] md:mb-[25px] sm:flex items-center justify-between">
           <div className="trezo-card-subtitle mt-[15px] sm:mt-0">
             <Link
-              href="/dashboard/news/create-news/"
+              href="/dashboard/testimonial/create-testimonial/"
               className="inline-block transition-all rounded-md font-medium px-[13px] py-[6px] text-primary-500 border border-primary-500 hover:bg-primary-500 hover:text-white"
             >
               <span className="inline-block relative ltr:pl-[22px] rtl:pr-[22px]">
                 <i className="material-symbols-outlined !text-[22px] absolute ltr:-left-[4px] rtl:-right-[4px] top-1/2 -translate-y-1/2">
                   add
                 </i>
-                أضف خبر جديد
+                أضف توصية جديدة
               </span>
             </Link>
           </div>
@@ -161,7 +116,7 @@ const NewsListTable: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="ابحث عن خبر..."
+              placeholder="ابحث عن توصية..."
               className="w-full p-2 pr-10 border transition border-[#f2f2f2] hover:bg-[#f2f2f2] rounded-lg outline-none dark:border-[#172036] dark:hover:bg-[#172036] dark:bg-[#0c1427] dark:text-white"
             />
             <i className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-500">
@@ -181,32 +136,6 @@ const NewsListTable: React.FC = () => {
             <option value="month">هذا الشهر</option>
             <option value="year">هذا العام</option>
           </select>
-
-          {/* Category Filter */}
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full p-2 border transition border-[#f2f2f2] hover:bg-[#f2f2f2] rounded-lg outline-none dark:border-[#172036] dark:hover:bg-[#172036] dark:bg-[#0c1427] dark:text-white"
-          >
-            <option value="">جميع التصنيفات</option>
-            {Object.entries(categoriesMap).map(([id, name]) => (
-              <option key={id} value={id}>
-                {name}
-              </option>
-            ))}
-          </select>
-
-          {/* Status Filter */}
-          <select
-            value={selectedStatus ?? ""}
-            onChange={(e) => setSelectedStatus(e.target.value || undefined)}
-            className="w-full p-2 border transition border-[#f2f2f2] hover:bg-[#f2f2f2] rounded-lg outline-none dark:border-[#172036] dark:hover:bg-[#172036] dark:bg-[#0c1427] dark:text-white"
-          >
-            <option value="">جميع الحالات</option>
-            <option value="urgent">عاجل</option>
-            <option value="important">مهم</option>
-            <option value="trend">رائج</option>
-          </select>
         </div>
 
         <div className="trezo-card-content">
@@ -214,41 +143,36 @@ const NewsListTable: React.FC = () => {
             <table className="w-full">
               <thead className="text-black dark:text-white">
                 <tr>
-                  {[
-                    "الخبر",
-                    "تاريخ الانشاء",
-                    "التصنيف",
-
-                    "الحالة",
-                    "الاجرائات",
-                  ].map((header) => (
-                    <th
-                      key={header}
-                      className="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] bg-gray-50 dark:bg-[#15203c] whitespace-nowrap ltr:first:rounded-tl-md ltr:last:rounded-tr-md rtl:first:rounded-tr-md rtl:last:rounded-tl-md"
-                    >
-                      {header}
-                    </th>
-                  ))}
+                  {["الصورة", "الاسم ", "تاريخ الانشاء", "الاجرائات"].map(
+                    (header) => (
+                      <th
+                        key={header}
+                        className="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] bg-gray-50 dark:bg-[#15203c] whitespace-nowrap ltr:first:rounded-tl-md ltr:last:rounded-tr-md rtl:first:rounded-tr-md rtl:last:rounded-tl-md"
+                      >
+                        {header}
+                      </th>
+                    )
+                  )}
                 </tr>
               </thead>
 
               <tbody className="text-black dark:text-white">
-                {news?.length === 0 ? (
+                {testimonials?.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="text-center py-8 text-gray-500">
-                      لا توجد أخبار متاحة
+                    <td colSpan={7} className="text-center py-8 text-gray-500">
+                      لا توجد توصيات متاحة
                     </td>
                   </tr>
                 ) : (
-                  news?.map((item) => (
+                  testimonials?.map((item) => (
                     <tr key={item.id}>
                       <td className="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] ltr:first:border-l ltr:last:border-r rtl:first:border-r rtl:last:border-l">
                         <div className="flex items-center text-black dark:text-white transition-all hover:text-primary-500">
                           <div className="relative w-[40px] h-[40px]">
                             <Image
                               className="rounded-md"
-                              alt="event-image"
-                              src={item?.images?.[0] || "/placeholder.png"}
+                              alt="testimonial-image"
+                              src={item?.image || "/placeholder.png"}
                               width={40}
                               height={40}
                               onError={(e) => {
@@ -257,13 +181,28 @@ const NewsListTable: React.FC = () => {
                               }}
                             />
                           </div>
-                          <span className="block text-[15px] font-medium ltr:ml-[12px] rtl:mr-[12px]">
-                            {item.title_ar.length > 30
-                              ? item.title_ar.slice(0, 30) + "..."
-                              : item.title_ar}
-                          </span>
                         </div>
                       </td>
+
+                      <td className="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] ltr:first:border-l ltr:last:border-r rtl:first:border-r rtl:last:border-l">
+                        <span className="block text-[15px] font-medium">
+                          {item.name_ar?.length > 20
+                            ? item.name_ar.slice(0, 20) + "..."
+                            : item.name_ar}
+                        </span>
+                      </td>
+
+                      {/* <td className="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] ltr:first:border-l ltr:last:border-r rtl:first:border-r rtl:last:border-l">
+                        <span
+                          className="block text-[15px] font-medium"
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              item.message_ar?.length > 30
+                                ? item.message_ar.slice(0, 30) + "..."
+                                : item.message_ar,
+                          }}
+                        />
+                      </td> */}
 
                       <td className="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] ltr:first:border-l ltr:last:border-r rtl:first:border-r rtl:last:border-l">
                         {new Date(item.created_at as string).toLocaleDateString(
@@ -277,27 +216,10 @@ const NewsListTable: React.FC = () => {
                       </td>
 
                       <td className="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] ltr:first:border-l ltr:last:border-r rtl:first:border-r rtl:last:border-l">
-                        {categoriesMap[item.category_id] || "غير معروف"}
-                      </td>
-
-                      <td className="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] ltr:first:border-l ltr:last:border-r rtl:first:border-r rtl:last:border-l">
-                        <span
-                          className={`px-[8px] py-[3px] inline-block rounded-sm font-medium text-xs dark:bg-[#15203c] ${
-                            statusColors[item.status || "normal"] ??
-                            statusColors["normal"]
-                          }`}
-                        >
-                          {item.status === "" || item.status == null
-                            ? statusLabels["normal"]
-                            : statusLabels[item.status] || item.status}
-                        </span>
-                      </td>
-
-                      <td className="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] ltr:first:border-l ltr:last:border-r rtl:first:border-r rtl:last:border-l">
                         <div className="flex items-center gap-[9px]">
                           <div className="relative group">
                             <Link
-                              href={`/dashboard/news/${item.id}`}
+                              href={`/dashboard/testimonial/${item.id}`}
                               className="text-gray-500 leading-none"
                               type="button"
                             >
@@ -344,7 +266,7 @@ const NewsListTable: React.FC = () => {
             </table>
             <div className=" flex justify-between">
               <p className="mt-2 text-gray-600 dark:text-gray-300 text-sm">
-                عرض {endIndex} أخبار من اجمالي {total} خبر
+                عرض {endIndex} توصية من اجمالي {total} توصية
               </p>
 
               <div className="mt-4 flex justify-center gap-2">
@@ -386,4 +308,4 @@ const NewsListTable: React.FC = () => {
   );
 };
 
-export default NewsListTable;
+export default TestimonialListTable;

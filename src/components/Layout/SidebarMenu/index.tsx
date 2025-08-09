@@ -38,7 +38,7 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ toggleActive }) => {
               height={26}
             />
             <span className="font-bold text-black dark:text-white relative ltr:ml-[8px] rtl:mr-[8px] top-px text-xl">
-              Trezo
+              ENS
             </span>
           </Link>
 
@@ -184,6 +184,64 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ toggleActive }) => {
             <div className="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
               <button
                 className={`accordion-button toggle flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c] ${
+                  openIndex === 3 ? "open" : ""
+                }`}
+                type="button"
+                onClick={() => toggleAccordion(3)}
+              >
+                <i className="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px">
+                  auto_stories
+                </i>
+                <span className="title leading-none">وكلاء العقارات</span>
+              </button>
+
+              <div className="pt-[4px]">
+                <ul className="sidebar-sub-menu">
+                  <div
+                    className={`accordion-collapse ${
+                      openIndex === 3 ? "open" : "hidden"
+                    }`}
+                  >
+                    <li className="sidemenu-item mb-[4px] last:mb-0">
+                      <Link
+                        href="/dashboard/real-estate/agents"
+                        className={`sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c] ${
+                          pathname === "/dashboard/real-estate/agents"
+                            ? "active"
+                            : ""
+                        }`}
+                      >
+                        <i className="ri-list-check-2  transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px"></i>
+                        قائمة الوكلاء
+                      </Link>
+                    </li>
+                  </div>
+                  <div
+                    className={`accordion-collapse ${
+                      openIndex === 3 ? "open" : "hidden"
+                    }`}
+                  >
+                    <li className="sidemenu-item mb-[4px] last:mb-0">
+                      <Link
+                        href="/dashboard/real-estate/add-agent"
+                        className={`sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c] ${
+                          pathname === "/dashboard/real-estate/add-agent"
+                            ? "active"
+                            : ""
+                        }`}
+                      >
+                        <i className="ri-newspaper-line  transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px"></i>
+                        إنشاء وكيل
+                      </Link>
+                    </li>
+                  </div>
+                </ul>
+              </div>
+            </div>
+
+            <div className="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
+              <button
+                className={`accordion-button toggle flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c] ${
                   openIndex === 2 ? "open" : ""
                 }`}
                 type="button"
@@ -237,6 +295,63 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ toggleActive }) => {
               </div>
             </div>
 
+            <div className="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
+              <button
+                className={`accordion-button toggle flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c] ${
+                  openIndex === 5 ? "open" : ""
+                }`}
+                type="button"
+                onClick={() => toggleAccordion(5)}
+              >
+                <i className="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px">
+                  auto_stories
+                </i>
+                <span className="title leading-none">توصيات العملاء</span>
+              </button>
+
+              <div className="pt-[4px]">
+                <ul className="sidebar-sub-menu">
+                  <div
+                    className={`accordion-collapse ${
+                      openIndex === 5 ? "open" : "hidden"
+                    }`}
+                  >
+                    <li className="sidemenu-item mb-[4px] last:mb-0">
+                      <Link
+                        href="/dashboard/testimonial"
+                        className={`sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c] ${
+                          pathname === "/dashboard/testimonial/" ? "active" : ""
+                        }`}
+                      >
+                        <i className="ri-list-check-2  transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px"></i>
+                        قائمة التوصيات
+                      </Link>
+                    </li>
+                  </div>
+                  <div
+                    className={`accordion-collapse ${
+                      openIndex === 5 ? "open" : "hidden"
+                    }`}
+                  >
+                    <li className="sidemenu-item mb-[4px] last:mb-0">
+                      <Link
+                        href="/dashboard/testimonial/create-testimonial"
+                        className={`sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c] ${
+                          pathname ===
+                          "/dashboard/testimonial/create-testimonial"
+                            ? "active"
+                            : ""
+                        }`}
+                      >
+                        <i className="ri-newspaper-line  transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px"></i>
+                        إنشاء توصية
+                      </Link>
+                    </li>
+                  </div>
+                </ul>
+              </div>
+            </div>
+
             <span className="block relative font-medium uppercase text-gray-400 mb-[8px] text-xs [&:not(:first-child)]:mt-[22px]">
               أخري
             </span>
@@ -276,19 +391,6 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({ toggleActive }) => {
               >
                 <div className="pt-[4px]">
                   <ul className="sidebar-sub-menu">
-                    <li className="sidemenu-item mb-[4px] last:mb-0">
-                      <Link
-                        href="/dashboard/site-settings/"
-                        className={`sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c] ${
-                          pathname === "/dashboard/site-settings/"
-                            ? "active"
-                            : ""
-                        }`}
-                      >
-                        إعدادات الصفحة
-                      </Link>
-                    </li>
-
                     <li className="sidemenu-item mb-[4px] last:mb-0">
                       <Link
                         href="/dashboard/my-profile/edit/"

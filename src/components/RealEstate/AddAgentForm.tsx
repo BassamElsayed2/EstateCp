@@ -2,36 +2,31 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import {
-  Editor,
-  EditorProvider,
-  ContentEditableEvent,
-  BtnBold,
-  BtnBulletList,
-  BtnClearFormatting,
-  BtnItalic,
-  BtnLink,
-  BtnNumberedList,
-  BtnRedo,
-  BtnStrikeThrough,
-  BtnStyles,
-  BtnUnderline,
-  BtnUndo,
-  HtmlButton,
-  Separator,
-  Toolbar,
-} from "react-simple-wysiwyg";
+import { useCreateRealtor, useUploadRealtorImage } from "./hooks/useRealtor";
+import { toast } from "react-hot-toast";
 
 const AddAgentForm: React.FC = () => {
-  // Editor
-  const [value, setValue] = useState<string>("Type your message here...");
-
-  function onChange(e: ContentEditableEvent) {
-    setValue(e.target.value);
-  }
+  // Form state
+  const [formData, setFormData] = useState({
+    name: "",
+    number: "",
+    email: "",
+  });
 
   // Upload Image
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
+
+  // React Query hooks
+  const createRealtorMutation = useCreateRealtor();
+  const uploadImageMutation = useUploadRealtorImage();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -44,18 +39,69 @@ const AddAgentForm: React.FC = () => {
     setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validation
+    if (!formData.name || !formData.number || !formData.email) {
+      toast.error("يرجى ملء جميع الحقول المطلوبة");
+      return;
+    }
+
+    if (selectedImages.length === 0) {
+      toast.error("يرجى اختيار صورة للوكيل");
+      return;
+    }
+
+    // Show loading toast
+    const loadingToast = toast.loading("جاري إنشاء الوكيل...");
+
+    try {
+      // Upload the first image
+      const imageUrl = await uploadImageMutation.mutateAsync(selectedImages[0]);
+
+      // Create realtor record
+      await createRealtorMutation.mutateAsync({
+        name: formData.name,
+        number: formData.number,
+        email: formData.email,
+        image: imageUrl,
+      });
+
+      // Reset form on success
+      setFormData({ name: "", number: "", email: "" });
+      setSelectedImages([]);
+
+      // Dismiss loading toast and show success
+      toast.dismiss(loadingToast);
+      toast.success("تم إنشاء الوكيل بنجاح!");
+    } catch (error) {
+      console.error("Error in form submission:", error);
+
+      // Dismiss loading toast and show error
+      toast.dismiss(loadingToast);
+      toast.error("حدث خطأ أثناء إنشاء الوكيل");
+    }
+  };
+
+  const isSubmitting =
+    createRealtorMutation.isPending || uploadImageMutation.isPending;
+
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="trezo-card bg-white dark:bg-[#0c1427] mb-[25px] p-[20px] md:p-[25px] rounded-md">
           <div className="trezo-card-content">
             <div className="sm:grid sm:grid-cols-2 sm:gap-[25px]">
               <div className="mb-[20px] sm:mb-0">
                 <label className="mb-[10px] text-black dark:text-white font-medium block">
-                  Agent Name
+                  الاسم
                 </label>
                 <input
                   type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
                   className="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
                   placeholder="Enter agent name"
                 />
@@ -63,21 +109,13 @@ const AddAgentForm: React.FC = () => {
 
               <div className="mb-[20px] sm:mb-0">
                 <label className="mb-[10px] text-black dark:text-white font-medium block">
-                  Agency
+                  الرقم
                 </label>
                 <input
                   type="text"
-                  className="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
-                  placeholder="Enter agency name"
-                />
-              </div>
-
-              <div className="mb-[20px] sm:mb-0">
-                <label className="mb-[10px] text-black dark:text-white font-medium block">
-                  Phone Number
-                </label>
-                <input
-                  type="text"
+                  name="number"
+                  value={formData.number}
+                  onChange={handleInputChange}
                   className="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
                   placeholder="Enter phone number"
                 />
@@ -85,117 +123,21 @@ const AddAgentForm: React.FC = () => {
 
               <div className="mb-[20px] sm:mb-0">
                 <label className="mb-[10px] text-black dark:text-white font-medium block">
-                  Email Address
+                  البريد الإلكتروني
                 </label>
                 <input
-                  type="text"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
                   className="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
                   placeholder="Enter email address"
                 />
               </div>
 
-              <div className="mb-[20px] sm:mb-0">
-                <label className="mb-[10px] text-black dark:text-white font-medium block">
-                  License Number
-                </label>
-                <input
-                  type="text"
-                  className="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
-                  placeholder="Enter license number"
-                />
-              </div>
-
-              <div className="mb-[20px] sm:mb-0">
-                <label className="mb-[10px] text-black dark:text-white font-medium block">
-                  Years of Experience
-                </label>
-                <input
-                  type="text"
-                  className="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
-                  placeholder="Enter years of experience"
-                />
-              </div>
-
-              <div className="mb-[20px] sm:mb-0">
-                <label className="mb-[10px] text-black dark:text-white font-medium block">
-                  Specialization
-                </label>
-                <input
-                  type="text"
-                  className="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
-                  placeholder="Enter specialization"
-                />
-              </div>
-
-              <div className="mb-[20px] sm:mb-0">
-                <label className="mb-[10px] text-black dark:text-white font-medium block">
-                  Office Location
-                </label>
-                <input
-                  type="text"
-                  className="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
-                  placeholder="Enter office location"
-                />
-              </div>
-
-              <div className="mb-[20px] sm:mb-0">
-                <label className="mb-[10px] text-black dark:text-white font-medium block">
-                  Recent Achievements
-                </label>
-                <input
-                  type="text"
-                  className="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
-                  placeholder="Enter recent achievements"
-                />
-              </div>
-
-              <div className="mb-[20px] sm:mb-0">
-                <label className="mb-[10px] text-black dark:text-white font-medium block">
-                  Client Testimonials
-                </label>
-                <input
-                  type="text"
-                  className="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
-                  placeholder="Enter client testimonials"
-                />
-              </div>
-
               <div className="sm:col-span-2 mb-[20px] sm:mb-0">
                 <label className="mb-[10px] text-black dark:text-white font-medium block">
-                  Additional Notes
-                </label>
-                <EditorProvider>
-                  <Editor
-                    value={value}
-                    onChange={onChange}
-                    style={{ minHeight: "200px" }}
-                    className="rsw-editor"
-                  >
-                    <Toolbar>
-                      <BtnUndo />
-                      <BtnRedo />
-                      <Separator />
-                      <BtnBold />
-                      <BtnItalic />
-                      <BtnUnderline />
-                      <BtnStrikeThrough />
-                      <Separator />
-                      <BtnNumberedList />
-                      <BtnBulletList />
-                      <Separator />
-                      <BtnLink />
-                      <BtnClearFormatting />
-                      <HtmlButton />
-                      <Separator />
-                      <BtnStyles />
-                    </Toolbar>
-                  </Editor>
-                </EditorProvider>
-              </div>
-
-              <div className="sm:col-span-2 mb-[20px] sm:mb-0">
-                <label className="mb-[10px] text-black dark:text-white font-medium block">
-                  Add Agent Photo
+                  صورة الوكيل
                 </label>
                 <div id="fileUploader">
                   <div className="relative flex items-center justify-center overflow-hidden rounded-md py-[88px] px-[20px] border border-gray-200 dark:border-[#172036]">
@@ -205,9 +147,9 @@ const AddAgentForm: React.FC = () => {
                       </div>
                       <p className="leading-[1.5]">
                         <strong className="text-black dark:text-white">
-                          Click to upload
+                          اضافة صورة
                         </strong>
-                        <br /> you file here
+                        <br /> هنا
                       </p>
                     </div>
                     <input
@@ -246,20 +188,26 @@ const AddAgentForm: React.FC = () => {
             <div className="mt-[20px] md:mt-[25px]">
               <button
                 type="button"
+                onClick={() => {
+                  setFormData({ name: "", number: "", email: "" });
+                  setSelectedImages([]);
+                  toast.success("تم إلغاء العملية");
+                }}
                 className="font-medium inline-block transition-all rounded-md md:text-md ltr:mr-[15px] rtl:ml-[15px] py-[10px] md:py-[12px] px-[20px] md:px-[22px] bg-danger-500 text-white hover:bg-danger-400"
               >
-                Cancel
+                الغاء
               </button>
 
               <button
-                type="button"
-                className="font-medium inline-block transition-all rounded-md md:text-md py-[10px] md:py-[12px] px-[20px] md:px-[22px] bg-primary-500 text-white hover:bg-primary-400"
+                type="submit"
+                disabled={isSubmitting}
+                className="font-medium inline-block transition-all rounded-md md:text-md py-[10px] md:py-[12px] px-[20px] md:px-[22px] bg-primary-500 text-white hover:bg-primary-400 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span className="inline-block relative ltr:pl-[29px] rtl:pr-[29px]">
                   <i className="material-symbols-outlined ltr:left-0 rtl:right-0 absolute top-1/2 -translate-y-1/2">
-                    add
+                    {isSubmitting ? "hourglass_empty" : "add"}
                   </i>
-                  Create Agent
+                  {isSubmitting ? "جاري الإنشاء..." : "إنشاء وكيل"}
                 </span>
               </button>
             </div>

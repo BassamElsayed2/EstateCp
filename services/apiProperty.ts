@@ -16,6 +16,7 @@ interface PropertyFormData {
   mapUrl: string;
   images: string[];
   isSpecial: boolean;
+  realtor_id?: string;
 }
 
 interface Property {
@@ -35,6 +36,7 @@ interface Property {
   map_url: string;
   images: string[];
   isSpecial: boolean;
+  realtor_id?: string;
   created_at: string;
 }
 
@@ -143,6 +145,7 @@ export const createProperty = async (
         map_url: formData.mapUrl,
         images: imageUrls,
         isSpecial: formData.isSpecial,
+        realtor_id: formData.realtor_id,
         created_at: new Date().toISOString(),
       },
     ]);
@@ -200,6 +203,7 @@ export const updateProperty = async (
         map_url: formData.mapUrl,
         images: formData.images,
         isSpecial: formData.isSpecial,
+        realtor_id: formData.realtor_id,
       })
       .eq("id", id);
 
